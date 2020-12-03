@@ -16,16 +16,16 @@
 (def sample (parse-input "day3-sample.txt"))
 (def input (parse-input "day3.txt"))
 
+(def tree \#)
+
 (defn slope-crashes [right down data]
-  (->> (range 1 (/ (count data) down))
-       (filter
-        (fn [i]
-          (let [row (* down i)
-                col (* right i)
-                line (nth data row)]
-            (when (= \# (nth line col))
-              true))))
-       count))
+  (count
+   (for [i (range 1 (/ (count data) down))
+         :let [row (* down i)
+               col (* right i)
+               line (nth data row)]
+         :when (= tree (nth line col))]
+     :crash)))
 
 (defn part1 []
   (slope-crashes 3 1 input))
